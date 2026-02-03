@@ -1,0 +1,139 @@
+2026/02/03 14:34:15 Using profile: scality_tenant1
+2026/02/03 14:34:15 Retrieving current account...
+2026/02/03 14:34:15 Current account: 12624558994 (ARN: arn:aws:iam::12624558994:/tenant1/)
+2026/02/03 14:34:15 Attempting to retrieve Organization accounts...
+2026/02/03 14:34:15 Access to Organizations denied, using current account only
+2026/02/03 14:34:15 Processing accounts and resources...
+2026/02/03 14:34:15   - Account: 12624558994 (current-account)
+2026/02/03 14:34:15     Retrieving users...
+2026/02/03 14:34:15     Retrieving groups...
+2026/02/03 14:34:15     Group: FullAccessGroup
+2026/02/03 14:34:15       - Policy: FullAccessPolicy
+2026/02/03 14:34:15     Group: ReadOnlyGroup
+2026/02/03 14:34:15       - Policy: ReadOnlyPolicy
+2026/02/03 14:34:15     Retrieving roles...
+2026/02/03 14:34:15     Role: service-backbeat-lifecycle-1
+2026/02/03 14:34:15       - Policy: service-backbeat-lifecycle-1
+2026/02/03 14:34:15     Retrieving buckets...
+2026/02/03 14:34:15       - Bucket: tenant1-test1
+{
+  "metadata": {
+    "generated_at": "2026-02-03T13:34:15Z",
+    "profile": "scality_tenant1",
+    "current_account": "12624558994",
+    "current_arn": "arn:aws:iam::12624558994:/tenant1/"
+  },
+  "accounts": [
+    {
+      "account_id": "12624558994",
+      "account_name": "current-account",
+      "account_status": "ACTIVE",
+      "resources": {
+        "users": null,
+        "groups": [
+          {
+            "GroupName": "FullAccessGroup",
+            "Arn": "arn:aws:iam::12624558994:group/FullAccessGroup",
+            "CreateDate": "2026-01-15T14:30:35Z",
+            "Users": null,
+            "AttachedPolicies": [
+              {
+                "PolicyName": "FullAccessPolicy",
+                "PolicyArn": "arn:aws:iam::12624558994:policy/FullAccessPolicy",
+                "PolicyDocument": {
+                  "Version": "2012-10-17",
+                  "Statement": [
+                    {
+                      "Action": "s3:*",
+                      "Effect": "Allow",
+                      "Resource": "*"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "GroupName": "ReadOnlyGroup",
+            "Arn": "arn:aws:iam::12624558994:group/ReadOnlyGroup",
+            "CreateDate": "2026-01-15T14:30:35Z",
+            "Users": null,
+            "AttachedPolicies": [
+              {
+                "PolicyName": "ReadOnlyPolicy",
+                "PolicyArn": "arn:aws:iam::12624558994:policy/ReadOnlyPolicy",
+                "PolicyDocument": {
+                  "Version": "2012-10-17",
+                  "Statement": [
+                    {
+                      "Action": [
+                        "s3:Get*",
+                        "s3:List*"
+                      ],
+                      "Effect": "Allow",
+                      "Resource": "*"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "roles": [
+          {
+            "RoleName": "service-backbeat-lifecycle-1",
+            "Arn": "arn:aws:iam::12624558994:role/scality-internal/service-backbeat-lifecycle-1",
+            "CreateDate": "2026-01-15T14:30:35Z",
+            "AttachedPolicies": [
+              {
+                "PolicyName": "service-backbeat-lifecycle-1",
+                "PolicyArn": "arn:aws:iam::12624558994:policy/scality-internal/service-backbeat-lifecycle-1",
+                "PolicyDocument": {
+                  "Version": "2012-10-17",
+                  "Statement": [
+                    {
+                      "Action": [
+                        "s3:GetLifecycleConfiguration",
+                        "s3:GetBucketVersioning",
+                        "s3:ListBucket",
+                        "s3:ListBucketVersions",
+                        "s3:ListBucketMultipartUploads",
+                        "s3:GetObjectTagging",
+                        "s3:GetObjectVersionTagging",
+                        "s3:GetObject",
+                        "s3:GetObjectVersion",
+                        "s3:DeleteObject",
+                        "s3:DeleteObjectVersion",
+                        "s3:AbortMultipartUpload",
+                        "s3:ReplicateObject"
+                      ],
+                      "Effect": "Allow",
+                      "Resource": [
+                        "*"
+                      ],
+                      "Sid": "LifecycleExpiration"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "buckets": [
+          {
+            "BucketName": "tenant1-test1",
+            "Arn": "arn:aws:s3:::tenant1-test1",
+            "Region": "us-east-1",
+            "Policies": [],
+            "ObjectLockConfiguration": {
+              "Enabled": true,
+              "Mode": "COMPLIANCE",
+              "Retention": "1 days"
+            },
+            "VersioningEnabled": true
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+version: 2
+
+before:
+  hooks:
+  - go mod tidy
+  - go test ./...
+
+builds:
+- id: aws-iam-audit
+  binary: aws-iam-audit
+  env:
+  - CGO_ENABLED=0
+  goos:
+  - linux
+  - windows
+  - darwin
+  goarch:
+  - amd64
+  - arm64
+  # Exclure certaines combinaisons si nécessaire
+  ignore:
+  - goos: windows
+    goarch: arm64
+  ldflags:
+  - -s -w
+  - -X main.version={{.Version}}
+  - -X main.commit={{.Commit}}
+  - -X main.date={{.Date}}
+  flags:
+  - -trimpath
+
+archives:
+- id: default
+  format: tar.gz
+  name_template: >-
+    {{ .ProjectName }}_{{- .Version }}_{{- .Os }}_{{- .Arch }}
+  format_overrides:
+  - goos: windows
+    format: zip
+  files:
+  - README.md
+  - LICENSE
+
+checksum:
+  name_template: 'checksums.txt'
+  algorithm: sha256
+
+snapshot:
+  version_template: "{{ .Tag }}-next"
+
+changelog:
+  sort: asc
+  use: github
+  filters:
+    exclude:
+    - '^docs:'
+    - '^test:'
+    - '^ci:'
+    - '^style:'
+    - '^chore:'
+  groups:
+  - title: Features
+    regexp: '^.*?feat(\([[:word:]]+\))??!?:.+$'
+    order: 0
+  - title: 'Bug fixes'
+    regexp: '^.*?fix(\([[:word:]]+\))??!?:.+$'
+    order: 1
+  - title: 'Security updates'
+    regexp: '^.*?sec(\([[:word:]]+\))??!?:.+$'
+    order: 2
+  - title: Others
+    order: 999
+
+release:
+  github:
+    owner: criann
+    name: aws-iam-audit
+  prerelease: auto
+  draft: false
